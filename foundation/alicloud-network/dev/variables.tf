@@ -20,7 +20,7 @@ variable "vswitch_cidr" {
 
 variable "vswitch_zone" {
   type = string
-  default = "cn-shanghai-a"
+  default = "cn-shanghai-b"
 }
 
 variable "security_group_name" {
@@ -40,7 +40,7 @@ variable "ingress_rules" {
       ip_protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
     }
-    springboot-demo = {
+    springboot-demo-a = {
       port_range  = "8083/8083"
       ip_protocol = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
