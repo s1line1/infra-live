@@ -3,7 +3,7 @@ data "terraform_remote_state" "network" {
 
   config = {
     bucket = "s1line1-state"
-    key    = "foundation/dev/alicloud-network.tfstate"
+    key    = "foundation/network/dev/alicloud-network.tfstate"
     region = "cn-shanghai"
   }
 }
