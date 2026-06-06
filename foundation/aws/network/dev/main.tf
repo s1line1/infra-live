@@ -1,21 +1,31 @@
 module "vpc" {
-  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/vpc?ref=v1.1.1"
+  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/vpc?ref=v1.1.3"
 
   vpc_name = var.vpc_name
   vpc_cidr = var.vpc_cidr
 }
 
 module "subnet" {
-  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/subnet?ref=v1.1.1"
+  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/subnet?ref=v1.1.3"
 
   vpc_id                  = module.vpc.vpc_id
-  subnet_cidr             = "172.41.1.0/24"
-  subnet_name             = "test-subnet"
   map_public_ip_on_launch = true
+
+  public_subnets = {
+    subnet1 = {
+      cidr = "172.41.1.0/24"
+      name = "test-subnet-1"
+    }
+    subnet2 = {
+      cidr = "172.41.2.0/24"
+      name = "test-subnet-2"
+    }
+  }
+
 }
 
 module "security_group" {
-  source = "git::https://github.com/s1line1/infra-modules.git//aws/security/security-group?ref=v1.1.1"
+  source = "git::https://github.com/s1line1/infra-modules.git//aws/security/security-group?ref=v1.1.3"
 
   vpc_id              = module.vpc.vpc_id
   security_group_name = "test-security-group"
@@ -49,17 +59,17 @@ module "security_group" {
 }
 
 module "igw" {
-  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/igw?ref=v1.1.1"
-  
+  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/igw?ref=v1.1.3"
+
   vpc_id   = module.vpc.vpc_id
   vpc_name = module.vpc.vpc_name
 }
 
 module "route_table" {
-  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/route_table?ref=v1.1.1"
+  source = "git::https://github.com/s1line1/infra-modules.git//aws/network/route_table?ref=v1.1.3"
 
-  vpc_id   = module.vpc.vpc_id
-  igw_id   = module.igw.igw_id
-  subnet_id = module.subnet.subnet_id
-  vpc_name = module.vpc.vpc_name
+  vpc_id     = module.vpc.vpc_id
+  igw_id     = module.igw.igw_id
+  subnet_ids = module.subnet.subnet_ids
+  vpc_name   = module.vpc.vpc_name
 }
