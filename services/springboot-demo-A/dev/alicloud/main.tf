@@ -33,10 +33,12 @@ module "springboot-demo-a_ecs" {
   internet_charge_type       = var.internet_charge_type
   internet_max_bandwidth_out = var.internet_max_bandwidth_out
 
-  user_scripts = <<-EOF
-                    #!/bin/bash
-                    apt-get update -y
-                    apt-get install -y docker.io docker-compose-v2
-                    systemctl enable docker --now
-                EOF
+  # user_scripts = <<-EOF
+  #                   #!/bin/bash
+  #                   apt-get update -y
+  #                   apt-get install -y docker.io docker-compose-v2
+  #                   systemctl enable docker --now
+  #               EOF
+
+  user_scripts = file("${path.module}/user_data.yaml")
 }
