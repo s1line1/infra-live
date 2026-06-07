@@ -11,17 +11,18 @@ module "subnet" {
   vpc_id                  = module.vpc.vpc_id
   map_public_ip_on_launch = true
 
-  public_subnets = {
-    subnet1 = {
-      cidr = "172.41.1.0/24"
-      name = "test-subnet-1"
-    }
-    subnet2 = {
-      cidr = "172.41.2.0/24"
-      name = "test-subnet-2"
-    }
-  }
+  # public_subnets = {
+  #   subnet1 = {
+  #     cidr = "172.41.1.0/24"
+  #     name = "test-subnet-1"
+  #   }
+  #   subnet2 = {
+  #     cidr = "172.41.2.0/24"
+  #     name = "test-subnet-2"
+  #   }
+  # }
 
+  public_subnets = var.subnets
 }
 
 module "security_group" {
@@ -30,32 +31,34 @@ module "security_group" {
   vpc_id              = module.vpc.vpc_id
   security_group_name = "test-security-group"
 
-  security_group_rules = {
-    ssh = {
-      name        = "ssh"
-      type        = "ingress"
-      from_port   = "22"
-      to_port     = "22"
-      ip_protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-    app = {
-      name        = "app"
-      type        = "ingress"
-      from_port   = "8080"
-      to_port     = "8080"
-      ip_protocol = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-    egress = {
-      name        = "egress_rules"
-      type        = "egress"
-      from_port   = "0"
-      to_port     = "0"
-      ip_protocol = "-1"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  }
+  # security_group_rules = {
+  #   ssh = {
+  #     name        = "ssh"
+  #     type        = "ingress"
+  #     from_port   = "22"
+  #     to_port     = "22"
+  #     ip_protocol = "tcp"
+  #     cidr_blocks = ["0.0.0.0/0"]
+  #   }
+  #   app = {
+  #     name        = "app"
+  #     type        = "ingress"
+  #     from_port   = "8080"
+  #     to_port     = "8080"
+  #     ip_protocol = "tcp"
+  #     cidr_blocks = ["0.0.0.0/0"]
+  #   }
+  #   egress = {
+  #     name        = "egress_rules"
+  #     type        = "egress"
+  #     from_port   = "0"
+  #     to_port     = "0"
+  #     ip_protocol = "-1"
+  #     cidr_blocks = ["0.0.0.0/0"]
+  #   }
+  # }
+
+  security_group_rules = var.security_group_rules
 }
 
 module "igw" {
