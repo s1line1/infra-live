@@ -2,6 +2,10 @@ name: Github Actions CI test
 
 on:
   workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
     
 jobs:
   test:
