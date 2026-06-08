@@ -30,7 +30,7 @@ data "aws_ami" "ubuntu" {
 }
 
 module "ec2_instance" {
-  source = "git::https://github.com/s1line1/infra-modules.git//aws/compute/ec2?ref=v1.1.3"
+  source = "git::https://github.com/s1line1/infra-modules.git//aws/compute/ec2?ref=v1.1.4"
 
   ami_id        = data.aws_ami.ubuntu.id
   instance_type  = "t3.micro"
