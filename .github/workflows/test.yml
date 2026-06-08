@@ -27,5 +27,15 @@ jobs:
           aws-region: us-east-1
       
       - name: Verify AWS credentials  
-        run: aws sts get-caller-identity
+        run: |
+          IDENTITY=$(aws sts get-caller-identity --output json)
+          ACCOUNT=$(echo "$IDENTITY" | jq -r '.Account')
+          if [ "$ACCOUNT" != "361995292965" ]; then
+            echo "::error::Expected account 361995292965 but got $ACCOUNT"
+            exit 1
+          fi
+          echo "AWS credentials verified successfully"
+
+      - name: print current folder
+        run: pwd
     
