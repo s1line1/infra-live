@@ -2,6 +2,10 @@ name: Github Actions CI test
 
 on:
   workflow_dispatch:
+    inputs:
+      command:
+        description: command 
+        type: string
 
 permissions:
   id-token: write
@@ -14,7 +18,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - run: echo "Hello, World!"
+      - run: | 
+          echo "Hello, World!"
+          echo "${{ inputs.command }}"
 
   config_credentials:
     runs-on: ubuntu-latest
