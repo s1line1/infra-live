@@ -48,8 +48,9 @@ jobs:
           pwd
           ls
 
-      # - name: terraform ${{ inputs.command }}
-      #   run: |
-      #     cd services/springboot-demo-A/dev/aws
-      #     terraform ${{ inputs.command }} -auto-approve
+      - name: terraform ${{ inputs.command }}
+        run: |
+          cd services/springboot-demo-A/dev/aws
+          terraform init
+          terraform ${{ inputs.command }} -auto-approve
     
