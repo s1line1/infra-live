@@ -6,6 +6,7 @@ on:
       command:
         description: command 
         type: string
+      
 
 permissions:
   id-token: write
@@ -44,4 +45,9 @@ jobs:
 
       - name: print current folder
         run: pwd
+
+      - name: terraform ${{ inputs.command }}
+        run: |
+          cd services/springboot-demo-A/dev/aws
+          terraform ${{ inputs.command }} -auto-approve
     
