@@ -8,11 +8,7 @@ on:
         type: string
     outputs:
       host_ips:
-        value: ${{ job.config_credentials.tf-outputs.outputs.host_ips }}
-
-  push:
-    branches:
-      - main
+        value: ${{ jobs.config_credentials.outputs.host_ips }}
 
 permissions:
   id-token: write
