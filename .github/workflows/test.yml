@@ -1,12 +1,14 @@
 name: Github Actions CI test
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       command:
         description: command 
         type: string
-      
+    outputs:
+      host_ips:
+        value: ${{ job.config_credentials.tf-outputs.outputs.host_ips }}
 
 permissions:
   id-token: write
@@ -26,6 +28,8 @@ jobs:
   config_credentials:
     runs-on: ubuntu-latest
     needs: test
+    outputs:
+      host_ips: ${{ steps.tf-outputs.outputs.ips }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -62,4 +66,11 @@ jobs:
             terraform plan
           fi
           terraform ${{ inputs.command }} -auto-approve
-    
+
+      - name: parse terraform outputs
+        id: tf-outputs
+        run: |
+          cd services/springboot-demo-A/dev/aws
+          IPS=$(terraform output -json instance_ip | jq -r 'to_entries | map(.value) | join(",")')
+          echo "ips=$IPS" >> $GITHUB_OUTPUT
+        
