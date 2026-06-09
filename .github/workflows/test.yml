@@ -8,7 +8,7 @@ on:
         type: string
     outputs:
       host_ips:
-        value: ${{ job.config_credentials.tf-outputs.outputs.host_ips }}
+        value: ${{ jobs.config_credentials.outputs.host_ips }}
 
 permissions:
   id-token: write
@@ -26,6 +26,7 @@ jobs:
           echo "${{ inputs.command }}"
 
   config_credentials:
+    if: ${{ github.event_name == 'workflow_call' }}
     runs-on: ubuntu-latest
     needs: test
     outputs:

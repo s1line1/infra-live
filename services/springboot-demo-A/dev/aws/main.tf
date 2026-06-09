@@ -38,6 +38,8 @@ module "ec2_instance" {
   instance_name  = "test-ec2-instance"
   instance_count = 1
 
+  key_name = "appkey"
+
   user_data = file("${path.module}/user_data.yaml")
 
   vpc_security_group_ids  = [data.terraform_remote_state.network.outputs.security_group_id]
