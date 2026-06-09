@@ -44,10 +44,12 @@ jobs:
           echo "AWS credentials verified successfully"
 
       - name: print current folder
-        run: pwd
-
-      - name: terraform ${{ inputs.command }}
         run: |
-          cd services/springboot-demo-A/dev/aws
-          terraform ${{ inputs.command }} -auto-approve
+          pwd
+          ls
+
+      # - name: terraform ${{ inputs.command }}
+      #   run: |
+      #     cd services/springboot-demo-A/dev/aws
+      #     terraform ${{ inputs.command }} -auto-approve
     
