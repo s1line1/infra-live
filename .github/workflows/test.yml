@@ -61,7 +61,7 @@ jobs:
 
       - name: terraform ${{ inputs.command }}
         run: |
-          cd services/springboot-demo-A/dev/aws
+          cd services/github-actions-demo/dev/aws
           terraform init
           if [ "${{ inputs.command }}" = "apply" ]; then
             terraform plan
@@ -71,7 +71,7 @@ jobs:
       - name: parse terraform outputs
         id: tf-outputs
         run: |
-          cd services/springboot-demo-A/dev/aws
+          cd services/github-actions-demo/dev/aws
           IPS=$(terraform output -json instance_ip | jq -r 'to_entries | map(.value) | join(",")')
           echo "ips=$IPS" >> $GITHUB_OUTPUT
         
