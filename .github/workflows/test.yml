@@ -52,5 +52,8 @@ jobs:
         run: |
           cd services/springboot-demo-A/dev/aws
           terraform init
+          if [ "${{ inputs.command }}" = "apply" ]; then
+            terraform plan
+          fi
           terraform ${{ inputs.command }} -auto-approve
     
