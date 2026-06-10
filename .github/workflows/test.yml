@@ -54,11 +54,6 @@ jobs:
           fi
           echo "AWS credentials verified successfully"
 
-      - name: print current folder
-        run: |
-          pwd
-          ls
-
       - name: terraform ${{ inputs.command }}
         run: |
           cd services/github-actions-demo/dev/aws
